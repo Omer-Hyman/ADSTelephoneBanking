@@ -4,7 +4,7 @@ public class CustomerQueue{
     private UserRecord user = new UserRecord(null, 0);
     private int x = 0;
     private List queue = new List(null);//queue initialisation
-    private List records = new List(null);//customer database initialisation
+    //private List records = new List(null);//customer database initialisation
 
 
     // Default Constructor
@@ -14,6 +14,8 @@ public class CustomerQueue{
             queue.addNode(user);//May not have to be in constructor
         }
     }
+
+
 
 //    public void displayQueue()
 //    {
@@ -25,16 +27,16 @@ public class CustomerQueue{
         queue.deleteFirstNode();
     }
 
-    public void pushQueue()
+    /*public void pushQueue()
     {
         x++;
         queue.addNode(records.getItemAtIndex(x).data);
-    }
+    }*/
 
     public int getNextCustIndex()
     {return x;}
 
     public List getQueue() {return queue;}
-    public List getRecords() {return records;}
+    //public List getRecords() {return records;}
 
 }

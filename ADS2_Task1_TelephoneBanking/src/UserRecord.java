@@ -6,7 +6,7 @@ public class UserRecord {
     public UserRecord(String username, double balance)
     {
         this.username=username;
-        this.balance = this.truncateTwoDecimal(balance);
+        this.balance = balance;
     }
 
     public double getBalance() { return balance; }

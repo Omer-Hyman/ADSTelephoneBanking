@@ -59,6 +59,7 @@ public class Main {
         System.out.println("System Initialization...");
         System.out.println("Load customer database...");
         userData = new CustomerData();
+
         System.out.println("Initializing queue...");
         queue = new CustomerQueue();
         currentState = State.WELCOME;
@@ -82,7 +83,7 @@ public class Main {
 
     private static void state_Q_push() {
         CustomerRequest newRequest = new CustomerRequest();
-        queue.pushQueue();
+        //queue.pushQueue();
         currentState = State.WELCOME;
     }
 
@@ -134,7 +135,7 @@ public class Main {
     //throw file exception everywhere that CustomerData object is used
 
     private static void state_H_remove() {
-        List list = new List(null);
+     /*   List list = new List(null);
         CustomerQueue temp = new CustomerQueue();
 
         int index = temp.getRecords().searchList(currentRequest.id);
@@ -145,14 +146,14 @@ public class Main {
         else
         {
             System.out.println("account not found!");
-        }
+        }*/
         currentState = State.WELCOME;
     }
 
     private static void state_H_new() throws FileNotFoundException {
-        CustomerQueue list = new CustomerQueue();
+        /*CustomerQueue list = new CustomerQueue();
         UserRecord user =new UserRecord(currentRequest.id, currentRequest.amountToChange);
-        list.getRecords().setCustomer(user);
+        list.getRecords().setCustomer(user);*/
         currentState = State.WELCOME;
     }
 
