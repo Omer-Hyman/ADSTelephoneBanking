@@ -89,7 +89,7 @@ public class Main {
     private static void state_task() {
         System.out.print("This customer want to ");
         //currentRequest.request
-        switch (0){
+        switch (1){
             default: break;
             case 0: System.out.println("open a new account");
                 System.out.println("Please input a new account ID:");
@@ -126,14 +126,13 @@ public class Main {
     }
 
     private static void state_H_remove() {
-        System.err.println("'Close Account' function is not implemented");//Delete this statement after the function is fully developed
+        userData.deleteCustomer(currentRequest.id);
         currentState = State.WELCOME;
     }
 
     private static void state_H_new() throws FileNotFoundException {
-        CustomerData data = new CustomerData();
         currentRequest.newRequest();
-        data.addCustomer(new UserRecord(currentRequest.id, currentRequest.amountToChange));
+        userData.addCustomer(new UserRecord(currentRequest.id, currentRequest.amountToChange));
         currentState = State.WELCOME;
     }
 

@@ -34,8 +34,30 @@ public class CustomerData {
         records[i] = user;
         i++;
         System.out.println("\nNew Customer: " + user.getUserName() +", "+ user.getBalance() +" added to database!\n");
+    }
+
+    public void deleteCustomer(String user)
+    {
+        boolean found = false;
         for (int x = 0; x < i;x++)
-            System.out.println(records[x].getUserName() + ","  + records[x].getBalance());
+        {
+            if (records[x].getUserName().equals(user))
+            {
+                System.out.println("User: " + records[x].getUserName() + " has been deleted!");
+                records[x] = null;
+                found = true;
+            }
+        }
+        if (!found)
+            System.err.println("Could not find user: " + user);
+    }
+
+    public void showRecords(){
+        for (int x = 0; x < i;x++)
+        {
+            if (records[x] != null)
+                System.out.println(records[x].getUserName() + ","  + records[x].getBalance());
+        }
     }
 
 }
