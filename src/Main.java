@@ -47,7 +47,6 @@ public class Main {
                     break;
             }
         }
-
         clear();
     }
 
@@ -70,26 +69,25 @@ public class Main {
         inputOrder.next();
     }
 
-    private static void state_Q_listAll() throws FileNotFoundException {
+    private static void state_Q_listAll(){
         queue.displayList();
         currentState = State.WELCOME;
     }
 
     private static void state_Q_push() throws FileNotFoundException {
-        CustomerQueue q = new CustomerQueue();
         queue.pushQueue();
         currentState = State.WELCOME;
     }
 
-    private static void state_Q_pop() throws FileNotFoundException {
+    private static void state_Q_pop(){
         queue.popQueue();
         currentState = State.TASK;
     }
 
     private static void state_task() {
+        currentRequest.newRequest();
         System.out.print("This customer want to ");
-        //currentRequest.request
-        switch (1){
+        switch (currentRequest.request){
             default: break;
             case 0: System.out.println("open a new account");
                 System.out.println("Please input a new account ID:");
@@ -121,7 +119,6 @@ public class Main {
                 if (currentRequest.checkID(currentRequest.id))
                     currentState = State.WITHDRAW;
                 break;
-
         }
     }
 
@@ -130,24 +127,26 @@ public class Main {
         currentState = State.WELCOME;
     }
 
-    private static void state_H_new() throws FileNotFoundException {
-        currentRequest.newRequest();
-        userData.addCustomer(new UserRecord(currentRequest.id, currentRequest.amountToChange));
+    private static void state_H_new() {
+        userData.addCustomer(new UserRecord(currentRequest.id, currentRequest.amountToChange));//new username works, balance doesn't yet.
         currentState = State.WELCOME;
     }
 
     private static void state_H_saveMoney() {
-        System.err.println("'Save Money' function is not implemented");//Delete this statement after the function is fully developed
+        int i = userData.findCustomer(currentRequest.id);
+        userData.getRecords()[i].increaseBalance(currentRequest.amountToChange);
         currentState =  State.DISPLAY;
     }
 
     private static void state_H_reduceMoney() {
-        System.err.println("'Withdraw Money' function is not implemented");//Delete this statement after the function is fully developed
+        int i = userData.findCustomer(currentRequest.id);
+        userData.getRecords()[i].decreaseBalance(currentRequest.amountToChange);
         currentState = State.DISPLAY;
     }
 
     private static void state_H_display() {
-        System.err.println("'Show Balance' function is not implemented");//Delete this statement after the function is fully developed
+        int i = userData.findCustomer(currentRequest.id);
+        System.out.println(userData.getRecords()[i].getBalance());
         currentState = State.WELCOME;
     }
 
