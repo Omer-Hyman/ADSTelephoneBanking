@@ -66,6 +66,10 @@ public class CustomerRequest {
 
         //25% of the tasks are "withdraw money"
         if (rand_int>=75 && rand_int<=100)   {request = 4; amountToChange=random;}
+
+        amountToChange *= 100;
+        int number = (int)amountToChange;
+        amountToChange = number/100;
     }
 }
 
