@@ -1,6 +1,8 @@
 public class UserRecord {
     private String userName;
     private double balance;
+    private int request;
+    private double change;
 
     public UserRecord(String name, double balance)
     {
@@ -16,9 +18,35 @@ public class UserRecord {
         this.userName = userName;
     }
 
+    public int getRequestInt() {
+        return request;
+    }
+
+    public String getRequestStr() {
+        return switch (request) {
+            case 0 -> "open an account";
+            case 1 -> "close an account";
+            case 2 -> "check balance";
+            case 3 -> "save money";
+            case 4 -> "withdraw money";
+            default -> "NO REQUEST!";
+        };
+    }
+
+    public void setChange(double change) {
+        this.change = change;
+    }
+
+    public double getChange() {
+        return change;
+    }
+
     public double getBalance() {
         return balance;
     }
+
+    public void setRequest(int request)
+    {this.request = request;}
 
     public void increaseBalance(double balance)
     {

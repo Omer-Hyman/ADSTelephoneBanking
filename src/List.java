@@ -4,7 +4,7 @@ public class List{
     private Node head;
     private Node tail;
     private Node iterator;
-    private int size;
+    private int size = 0;
 
     public List(Node head)
     {
@@ -37,6 +37,7 @@ public class List{
 
     public Node searchListByIndex(int index)
     {
+        iterator = head;
         int i = 0;
         if (index <= this.size)
             while (i != index)
@@ -44,7 +45,6 @@ public class List{
                 iterator = iterator.next;
                 i++;
             }
-        iterator = this.head;
         return iterator;
     }
 

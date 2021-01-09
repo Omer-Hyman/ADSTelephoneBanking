@@ -1,5 +1,6 @@
 import java.util.Random;
 
+
 public class CustomerRequest {
     public int request; //The indication of which request the customer have
     public double amountToChange;//For open account, save and withdraw money task
@@ -45,6 +46,7 @@ public class CustomerRequest {
         return false;
     }
 
+
     public void newRequest() {
         //Generate a random amount of money (0.1~10.1) to change (only for open/save/withdraw)
         double random = rand.nextDouble()*10+0.1;
@@ -68,8 +70,8 @@ public class CustomerRequest {
         if (rand_int>=75 && rand_int<=100)   {request = 4; amountToChange=random;}
 
         amountToChange *= 100;
-        int number = (int)amountToChange;
-        amountToChange = number/100;
+        amountToChange = Math.round(amountToChange);
+        amountToChange /= 100;
     }
 }
 

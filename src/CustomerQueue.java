@@ -2,36 +2,83 @@ import java.io.FileNotFoundException;
 
 public class CustomerQueue {
     List queue = new List(null);
-
+    CustomerRequest request = new CustomerRequest();
+    int i= 0;
+    UserRecord popped;
     // Default Constructor
     CustomerQueue() throws FileNotFoundException {
 
         CustomerData user = new CustomerData();
-        for (int i=0 ; i < 10; i++)
+        for (i=0 ; i < 10; i++)
         {
+            request.newRequest();
             queue.addNode(user.getRecords()[i]);
+            queue.searchListByIndex(i).data.setRequest(request.request);
+            queue.searchListByIndex(i).data.setChange(request.amountToChange);
+        }
+    }
+
+    public UserRecord getPopped() {
+        return popped;
+    }
+
+    public boolean checkFirstID(String name)
+    {
+        if (name.equals(popped.getUserName()))
+            return true;
+        else
+        {
+            System.err.println("Username was incorrect!");//PROBLEM HERE WHEN ANY USERNAME INPUTTED FOR NEW ACCOUNT
+            return false;
         }
     }
 
     public void displayList()
     {
+        CustomerRequest request = new CustomerRequest();
         Node iterator = queue.getHead();
         for (int x = 0; x < queue.getSize(); x++)
         {
-            System.out.println(iterator.data.getUserName() + ", " + iterator.data.getBalance());
+            request.newRequest();
+            System.out.println(iterator.data.getUserName() + ", " + iterator.data.getBalance() + " :  " + iterator.data.getRequestStr());
             iterator = iterator.next;
         }
         System.out.println("Size: " +queue.getSize());
     }
 
-    public void popQueue()
+    public boolean popQueue()//REMOVE FROM LIST
     {
-        queue.popList();
+        if (queue.getSize() == 0) {
+            System.err.println("The customer queue is empty! Please queue a new customer.");
+            return true;
+        }
+        else {
+            popped = queue.getHead().data;
+            queue.popList();
+            i++;
+            return false;
+        }
+    }
+    public Node getHead()
+    {
+        return queue.getHead();
     }
 
-    public void pushQueue() throws FileNotFoundException {
+    public void pushQueue() throws FileNotFoundException {//ADD TO LIST
         CustomerData user = new CustomerData();
-        queue.addNode(user.getRecords()[queue.getSize()]);
+        if(i < 101)
+        {
+            request.newRequest();
+            queue.addNode(user.getRecords()[i]);
+            queue.searchListByIndex(i).data.setRequest(request.request);
+            System.out.println("New customer queued!\nSize = " + queue.getSize());
+            i++;
+        }
+        else
+        {
+            System.err.println("All customers have been queued!");
+        }
+
     }
 
 }
