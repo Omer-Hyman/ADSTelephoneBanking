@@ -5,12 +5,17 @@ public class List{
     private Node tail;
     private Node iterator;
     private int size = 0;
+    private UserRecord popped;
 
     public List(Node head)
     {
         this.head = head;
         tail = head;
     }
+
+    public UserRecord getPopped()
+    {return popped;}
+
 
     public void addNode(UserRecord data)
     {
@@ -50,8 +55,11 @@ public class List{
 
     public void popList()
     {
+        this.popped = this.head.data;
         this.head = this.head.next;
         size--;
     }
+
+
 
 }

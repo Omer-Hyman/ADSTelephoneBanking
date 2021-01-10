@@ -4,7 +4,6 @@ public class CustomerQueue {
     List queue = new List(null);
     CustomerRequest request = new CustomerRequest();
     int i= 0;
-    UserRecord popped;
     // Default Constructor
     CustomerQueue() throws FileNotFoundException {
 
@@ -18,13 +17,9 @@ public class CustomerQueue {
         }
     }
 
-    public UserRecord getPopped() {
-        return popped;
-    }
-
     public boolean checkFirstID(String name)
     {
-        if (name.equals(popped.getUserName()))
+        if (name.equals(queue.getPopped().getUserName()))
             return true;
         else
         {
@@ -53,15 +48,10 @@ public class CustomerQueue {
             return true;
         }
         else {
-            popped = queue.getHead().data;
             queue.popList();
             i++;
             return false;
         }
-    }
-    public Node getHead()
-    {
-        return queue.getHead();
     }
 
     public void pushQueue() throws FileNotFoundException {//ADD TO LIST

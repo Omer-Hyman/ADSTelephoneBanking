@@ -14,10 +14,6 @@ public class UserRecord {
         return  userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public int getRequestInt() {
         return request;
     }

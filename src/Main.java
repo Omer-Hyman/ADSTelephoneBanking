@@ -84,15 +84,14 @@ public class Main {
         if (listEmpty)
             currentState = State.WELCOME;
         else
-            currentRequest.request = queue.getPopped().getRequestInt();
-            currentRequest.amountToChange = queue.getPopped().getChange();
+            currentRequest.request = queue.queue.getPopped().getRequestInt();
+            currentRequest.amountToChange = queue.queue.getPopped().getChange();
             currentState = State.TASK;
     }
 
     private static void state_task() {
         System.out.print("This customer want to ");
-        switch (//currentRequest.request
-        1 ){
+        switch (currentRequest.request){
             default: break;
             case 0: System.out.println("open a new account");
                 System.out.println("Please input a new account ID:");
@@ -101,25 +100,25 @@ public class Main {
                     currentState = State.NEW;
                 break;
             case 1: System.out.println("close the account");
-                System.out.println("Please input the account ID: " + "("+ queue.getPopped().getUserName() + ") ");
+                System.out.println("Please input the account ID: " + "("+ queue.queue.getPopped().getUserName() + ") ");
                 currentRequest.id = inputID.nextLine();
                 if (queue.checkFirstID(currentRequest.id))
                     currentState = State.REMOVE;
                 break;
             case 2: System.out.println("check balance");
-                System.out.println("Please input the account ID: " + "("+ queue.getPopped().getUserName() + ") ");
+                System.out.println("Please input the account ID: " + "("+ queue.queue.getPopped().getUserName() + ") ");
                 currentRequest.id = inputID.nextLine();
                 if (queue.checkFirstID(currentRequest.id))
                     currentState = State.DISPLAY;
                 break;
             case 3: System.out.println("save £"+currentRequest.amountToChange);
-                System.out.println("Please input the account ID: " + "("+ queue.getPopped().getUserName() + ") ");
+                System.out.println("Please input the account ID: " + "("+ queue.queue.getPopped().getUserName() + ") ");
                 currentRequest.id = inputID.nextLine();
                 if (queue.checkFirstID(currentRequest.id))
                     currentState = State.SAVE;
                 break;
             case 4: System.out.println("withdraw £"+currentRequest.amountToChange);
-                System.out.println("Please input the account ID: " + "("+ queue.getPopped().getUserName() + ") ");
+                System.out.println("Please input the account ID: " + "("+ queue.queue.getPopped().getUserName() + ") ");
                 currentRequest.id = inputID.nextLine();
                 if (queue.checkFirstID(currentRequest.id))
                     currentState = State.WITHDRAW;
@@ -128,12 +127,15 @@ public class Main {
     }
 
     private static void state_H_remove() throws FileNotFoundException {
-        userData.deleteCustomer(currentRequest.id);
-        currentState = State.WELCOME;
-        /*if (userData.deleteCustomer(currentRequest.id))
+        if (currentRequest.id.equals(queue.queue.getPopped().getUserName()))
+        {
+            userData.deleteCustomer(currentRequest.id);
             currentState = State.WELCOME;
-        else
-            currentState = State.TASK;*/
+        }
+        else {
+            System.err.println("UserName " + currentRequest.id + "was incorrect!");
+            currentState = State.TASK;
+        }
     }
 
     private static void state_H_new() {
@@ -151,7 +153,7 @@ public class Main {
 
         if (queue.checkFirstID(currentRequest.id))
         {
-            queue.getPopped().increaseBalance(currentRequest.amountToChange);
+            queue.queue.getPopped().increaseBalance(currentRequest.amountToChange);
         }else
             System.err.println(currentRequest.id + " is not your correct ID!");
         currentState =  State.DISPLAY;
@@ -159,7 +161,7 @@ public class Main {
 
     private static void state_H_reduceMoney() {
         if (queue.checkFirstID(currentRequest.id))
-            queue.getPopped().decreaseBalance(currentRequest.amountToChange);
+            queue.queue.getPopped().decreaseBalance(currentRequest.amountToChange);
         else
             System.err.println(currentRequest.id + " is not your correct ID!");
         currentState = State.DISPLAY;
@@ -167,7 +169,7 @@ public class Main {
 
     private static void state_H_display() {
         if (queue.checkFirstID(currentRequest.id))
-            System.out.println("Balance = " +queue.getPopped().getBalance());
+            System.out.println("Balance = " +queue.queue.getPopped().getBalance());
         else
             System.err.println(currentRequest.id + " is not your correct ID!");
         currentState = State.WELCOME;

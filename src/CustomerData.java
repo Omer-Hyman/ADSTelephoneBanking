@@ -54,19 +54,9 @@ public class CustomerData {
         return -1;
     }
 
-    public boolean deleteCustomer(String user) throws FileNotFoundException {
-        CustomerQueue q = new CustomerQueue();
-        if (user.equals(q.getPopped().getUserName()))
-        {
-            System.out.println("User: " + user + " has been deleted!");
-            records[findCustomer(user)] = null;
-            return true;
-        }
-        else {
-            System.err.println("UserName " + user + "was incorrect!");
-            System.err.println("User = " + user);
-            return false;
-        }
+    public void deleteCustomer(String user){
+        System.out.println("User: " + user + " has been deleted!");
+        records[findCustomer(user)] = null;
     }
 
     public void showRecords(){
