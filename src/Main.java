@@ -139,9 +139,11 @@ public class Main {
     }
 
     private static void state_H_new() {
-        int i =currentRequest.request;
+        int i = currentRequest.request;
         currentRequest.newRequest();
-        if (userData.addCustomer(new UserRecord(currentRequest.id, currentRequest.amountToChange)))
+        UserRecord user = new UserRecord(currentRequest.id, currentRequest.amountToChange);
+        user.setRequest(currentRequest.request);
+        if (userData.addCustomer(user))
             currentState = State.WELCOME;
         else {
             currentRequest.request = i;

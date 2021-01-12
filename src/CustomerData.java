@@ -3,11 +3,12 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class CustomerData {
-    UserRecord[] records = new UserRecord[120];
+    Vector records = new Vector();
     CustomerRequest request = new CustomerRequest();
-    int i = 0;
+    int x =0;
     CustomerData() throws FileNotFoundException {
         try (Scanner scanner = new Scanner(new File("BankUserDataset100.csv"))) {
+            int i = 0;
             scanner.useDelimiter("\r\n");
             while(scanner.hasNext()){
                 String[] currentLine = scanner.next().split(",");
@@ -15,8 +16,8 @@ public class CustomerData {
                 double currentBalance = Double.parseDouble(currentLine[1]);
 
                 UserRecord user = new UserRecord(currentID, currentBalance);
+                records.append(user);
 
-                records[i] = user;
                 i++;
             }
         }
@@ -26,14 +27,14 @@ public class CustomerData {
     }
 
     public UserRecord[] getRecords()
-    {return records;}
+    {return records.getArray();}
+
 
     public boolean addCustomer(UserRecord user)
     {
         if (findCustomer(user.getUserName()) == -1)
         {
-            records[i] = user;
-            i++;
+            records.append(user);
             System.out.println("\nNew Customer: " + user.getUserName() + " added to database!");
             return true;
         }
@@ -44,26 +45,35 @@ public class CustomerData {
 
     }
 
+    public int getX() {
+        return x;
+    }
+
     public int findCustomer(String user)
     {
-        for (int x = 0; x < i;x++) {
-            if (records[x].getUserName().equals(user)) {
+        int i = getX();
+        for ( x = getX() ; x < records.getLength();x++) {
+            if (records.getArray()[x].getUserName().equals(user)) {
+                x = i;
                 return x;
             }
         }
+        x = i;
         return -1;
     }
 
     public void deleteCustomer(String user){
+        records.getArray()[findCustomer(user)] = null;
         System.out.println("User: " + user + " has been deleted!");
-        records[findCustomer(user)] = null;
+        x++;
+
     }
 
     public void showRecords(){
-        for (int x = 0; x < i;x++)
+        for (int x = 0; x < records.getLength();x++)
         {
-            if (records[x] != null)
-                System.out.println(records[x].getUserName() + ","  + records[x].getBalance());
+            if (records.getArray()[x] != null)
+                System.out.println(records.getArray()[x].getUserName() + ","  + records.getArray()[x].getBalance());
         }
     }
 
