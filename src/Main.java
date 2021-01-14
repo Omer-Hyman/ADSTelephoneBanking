@@ -91,7 +91,8 @@ public class Main {
 
     private static void state_task() {
         System.out.print("This customer want to ");
-        switch (currentRequest.request){
+        switch (//currentRequest.request
+                0){
             default: break;
             case 0: System.out.println("open a new account");
                 System.out.println("Please input a new account ID:");

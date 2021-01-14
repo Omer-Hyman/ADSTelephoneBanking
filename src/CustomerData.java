@@ -20,6 +20,10 @@ public class CustomerData {
 
                 i++;
             }
+            showRecords();
+            System.out.println("\n\n");
+            records.mergeSort(records.getArray(), records.getLength());
+            showRecords();
         }
         catch (FileNotFoundException e){
             System.err.println(e.getLocalizedMessage());
@@ -32,7 +36,7 @@ public class CustomerData {
 
     public boolean addCustomer(UserRecord user)
     {
-        if (findCustomer(user.getUserName()) == -1)
+        if (binarySearch(user.getUserName()) == -1)
         {
             records.append(user);
             System.out.println("\nNew Customer: " + user.getUserName() + " added to database!");
@@ -42,38 +46,42 @@ public class CustomerData {
             System.err.println("Customer " + user.getUserName() + " already exists!");
             return false;
         }
-
     }
 
     public int getX() {
         return x;
     }
 
-    public int findCustomer(String user)
+
+    public int binarySearch(String searchedItem)
     {
-        int i = getX();
-        for ( x = getX() ; x < records.getLength();x++) {
-            if (records.getArray()[x].getUserName().equals(user)) {
-                x = i;
-                return x;
-            }
+        int left = 0, right = records.getArray().length - 1;
+
+        while (left <= right) {
+            int middle = left + (right - left) / 2;
+
+            if (records.getArray()[middle].getUserName().equals(searchedItem))
+                return middle;
+
+            if (records.getArray()[middle].getUserName().compareTo(searchedItem) < 0)
+                left = middle + 1;
+            else
+                right = middle - 1;
         }
-        x = i;
-        return -1;
+        return -1;//NOT FOUND
     }
 
     public void deleteCustomer(String user){
-        records.getArray()[findCustomer(user)] = null;
+        records.getArray()[binarySearch(user)] = null;
         System.out.println("User: " + user + " has been deleted!");
         x++;
-
     }
 
     public void showRecords(){
         for (int x = 0; x < records.getLength();x++)
         {
             if (records.getArray()[x] != null)
-                System.out.println(records.getArray()[x].getUserName() + ","  + records.getArray()[x].getBalance());
+                System.out.println(x + ": " +records.getArray()[x].getUserName() + ","  + records.getArray()[x].getBalance());
         }
     }
 
